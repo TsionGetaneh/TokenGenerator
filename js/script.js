@@ -30,6 +30,7 @@
 
     let provider = null, signer = null, contract = null, userAddress = null;
     let tokenDecimals = 18;
+    let tokenSymbol = "", tokenName = ""; // store for add-to-wallet
 
     // DOM elements
     const connectBtn = document.getElementById('connectBtn');
@@ -55,6 +56,10 @@
     const transferFromAmountInput = document.getElementById('transferFromAmount');
     const transferFromBtn = document.getElementById('transferFromBtn');
     const transferFromStatus = document.getElementById('transferFromStatus');
+    const addToWalletBtn = document.getElementById('addToWalletBtn');
+    const burnAmountInput = document.getElementById('burnAmount');
+    const burnBtn = document.getElementById('burnBtn');
+    const burnStatus = document.getElementById('burnStatus');
 
     function shortenAddress(addr) {
         return addr ? addr.slice(0,6)+'...'+addr.slice(-4) : 'Not connected';
@@ -87,6 +92,8 @@
             const symbol = await contract.symbol();
             const totalSup = await contract.totalSupply();
             const balance = await contract.balanceOf(userAddress);
+            tokenName = name;
+            tokenSymbol = symbol;
             tokenNameSpan.innerText = name;
             tokenSymbolSpan.innerText = symbol;
             totalSupplySpan.innerText = formatToken(totalSup);
@@ -126,7 +133,6 @@
             await initContract();
             updateWalletUI();
 
-            // Event listeners
             window.ethereum.on('accountsChanged', (acc) => {
                 if (acc.length) {
                     userAddress = acc[0];
@@ -151,7 +157,7 @@
         tokenSymbolSpan.innerText = '—';
         totalSupplySpan.innerText = '—';
         userBalanceSpan.innerText = '—';
-        transferStatus.innerHTML = approveStatus.innerHTML = transferFromStatus.innerHTML = '';
+        transferStatus.innerHTML = approveStatus.innerHTML = transferFromStatus.innerHTML = burnStatus.innerHTML = '';
         allowanceResultDiv.innerHTML = '—';
     }
 
@@ -271,12 +277,73 @@
         }
     }
 
+    // NEW: Add token to MetaMask
+    async function addTokenToWallet() {
+        if (!window.ethereum) {
+            alert("MetaMask is not installed.");
+            return;
+        }
+        if (!contract) {
+            alert("Please connect your wallet first.");
+            return;
+        }
+        try {
+            const wasAdded = await window.ethereum.request({
+                method: 'wallet_watchAsset',
+                params: {
+                    type: 'ERC20',
+                    options: {
+                        address: CONTRACT_ADDRESS,
+                        symbol: tokenSymbol,
+                        decimals: tokenDecimals,
+                        // optional image: 'data:image/svg+xml,...'
+                    },
+                },
+            });
+            if (wasAdded) {
+                alert("Token added to MetaMask!");
+            } else {
+                alert("User declined to add token.");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Failed to add token: " + err.message);
+        }
+    }
+
+    // NEW: Burn tokens (assumes contract has a public burn(uint256) function)
+    async function burnTokens() {
+        if (!contract) {
+            burnStatus.innerHTML = '<span style="color:#f87171">Wallet not connected</span>';
+            return;
+        }
+        const amountRaw = burnAmountInput.value.trim();
+        if (!amountRaw || parseFloat(amountRaw) <= 0) {
+            burnStatus.innerHTML = '<span style="color:#f87171">Invalid amount</span>';
+            return;
+        }
+        try {
+            const value = parseTokenAmount(amountRaw);
+            // Check if contract has a burn method. If not, show helpful error.
+            if (typeof contract.burn !== 'function') {
+                burnStatus.innerHTML = '<span style="color:#f87171">❌ This contract does not have a burn function. Cannot burn tokens.</span>';
+                return;
+            }
+            await handleTransaction(contract.burn(value), burnStatus, `Burned ${amountRaw} tokens`);
+            burnAmountInput.value = '';
+        } catch (err) {
+            burnStatus.innerHTML = `<span style="color:#f87171">${err.message}</span>`;
+        }
+    }
+
     // Attach event listeners
     connectBtn.addEventListener('click', () => userAddress ? disconnectWallet() : connectWallet());
     sendTransferBtn.addEventListener('click', transferTokens);
     approveBtn.addEventListener('click', approveSpending);
     checkAllowanceBtn.addEventListener('click', checkAllowance);
     transferFromBtn.addEventListener('click', transferFrom);
+    addToWalletBtn.addEventListener('click', addTokenToWallet);
+    burnBtn.addEventListener('click', burnTokens);
 
     // Auto-reconnect if already authorized
     if (window.ethereum && window.ethereum.selectedAddress) {
