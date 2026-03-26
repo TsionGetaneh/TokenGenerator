@@ -30,7 +30,7 @@
 
     let provider = null, signer = null, contract = null, userAddress = null;
     let tokenDecimals = 18;
-    let tokenSymbol = "", tokenName = ""; // store for add-to-wallet
+    let tokenSymbol = "", tokenName = "";
 
     // DOM elements
     const connectBtn = document.getElementById('connectBtn');
@@ -100,6 +100,10 @@
             userBalanceSpan.innerText = formatToken(balance);
         } catch (err) {
             console.error("Token info error:", err);
+            tokenNameSpan.innerText = 'Error';
+            tokenSymbolSpan.innerText = 'Error';
+            totalSupplySpan.innerText = 'Error';
+            userBalanceSpan.innerText = 'Error';
         }
     }
 
@@ -277,7 +281,7 @@
         }
     }
 
-    // NEW: Add token to MetaMask
+    // Add token to MetaMask
     async function addTokenToWallet() {
         if (!window.ethereum) {
             alert("MetaMask is not installed.");
@@ -287,6 +291,24 @@
             alert("Please connect your wallet first.");
             return;
         }
+
+        // Ensure we have token details
+        if (!tokenSymbol || tokenSymbol === '—') {
+            try {
+                const symbol = await contract.symbol();
+                const name = await contract.name();
+                const decimals = await contract.decimals();
+                tokenSymbol = symbol;
+                tokenName = name;
+                tokenDecimals = decimals;
+                tokenNameSpan.innerText = name;
+                tokenSymbolSpan.innerText = symbol;
+            } catch (e) {
+                alert("Could not fetch token details. Make sure you're on the correct network and the contract exists.");
+                return;
+            }
+        }
+
         try {
             const wasAdded = await window.ethereum.request({
                 method: 'wallet_watchAsset',
@@ -296,22 +318,23 @@
                         address: CONTRACT_ADDRESS,
                         symbol: tokenSymbol,
                         decimals: tokenDecimals,
-                        // optional image: 'data:image/svg+xml,...'
                     },
                 },
             });
             if (wasAdded) {
                 alert("Token added to MetaMask!");
+                const originalText = addToWalletBtn.innerHTML;
+                addToWalletBtn.innerHTML = '<i class="fas fa-check"></i> Added!';
+                setTimeout(() => { addToWalletBtn.innerHTML = originalText; }, 2000);
             } else {
                 alert("User declined to add token.");
             }
         } catch (err) {
             console.error(err);
-            alert("Failed to add token: " + err.message);
+            alert("Failed to add token: " + (err.message || "Unknown error"));
         }
     }
 
-    // NEW: Burn tokens (assumes contract has a public burn(uint256) function)
     async function burnTokens() {
         if (!contract) {
             burnStatus.innerHTML = '<span style="color:#f87171">Wallet not connected</span>';
@@ -324,7 +347,6 @@
         }
         try {
             const value = parseTokenAmount(amountRaw);
-            // Check if contract has a burn method. If not, show helpful error.
             if (typeof contract.burn !== 'function') {
                 burnStatus.innerHTML = '<span style="color:#f87171">❌ This contract does not have a burn function. Cannot burn tokens.</span>';
                 return;
