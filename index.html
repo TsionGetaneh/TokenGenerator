@@ -4,17 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>ERC20 Token Dashboard | Web3 Interface</title>
-    <!-- Google Fonts for modern typography -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <!-- Font Awesome 6 (free icons) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
             background: radial-gradient(circle at 20% 30%, #0a0c10, #030507);
@@ -22,14 +15,7 @@
             padding: 2rem 1.5rem;
             color: #eef2ff;
         }
-
-        /* main container */
-        .dashboard {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* header + wallet row */
+        .dashboard { max-width: 1400px; margin: 0 auto; }
         .header {
             display: flex;
             justify-content: space-between;
@@ -43,7 +29,6 @@
             padding: 1rem 1.8rem;
             border: 1px solid rgba(72, 187, 255, 0.2);
         }
-
         .logo h1 {
             font-size: 1.7rem;
             font-weight: 600;
@@ -51,28 +36,16 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: -0.3px;
         }
-        .logo p {
-            font-size: 0.75rem;
-            color: #94a3b8;
-        }
-
-        .wallet-status {
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-            flex-wrap: wrap;
-        }
+        .logo p { font-size: 0.75rem; color: #94a3b8; }
+        .wallet-status { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
         .address-badge {
             background: #1e293b;
             padding: 0.5rem 1.2rem;
             border-radius: 40px;
             font-family: monospace;
             font-size: 0.85rem;
-            font-weight: 500;
             border: 1px solid #334155;
-            backdrop-filter: blur(4px);
         }
         .connect-btn {
             background: linear-gradient(105deg, #2563eb, #1e40af);
@@ -80,50 +53,31 @@
             padding: 0.6rem 1.5rem;
             border-radius: 40px;
             font-weight: 600;
-            font-size: 0.9rem;
             color: white;
             cursor: pointer;
             transition: 0.2s;
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
-        .connect-btn:hover {
-            transform: scale(1.02);
-            background: linear-gradient(105deg, #3b82f6, #2563eb);
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
-        }
-        .disconnect-btn {
-            background: rgba(100, 116, 139, 0.3);
-            border: 1px solid #475569;
-        }
-        .disconnect-btn:hover {
-            background: #ef4444;
-            border-color: #ef4444;
-        }
-
-        /* grid layout for cards */
+        .connect-btn:hover { transform: scale(1.02); background: linear-gradient(105deg, #3b82f6, #2563eb); }
+        .disconnect-btn { background: rgba(100, 116, 139, 0.3); border: 1px solid #475569; }
+        .disconnect-btn:hover { background: #ef4444; border-color: #ef4444; }
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
             gap: 1.8rem;
             margin-top: 1rem;
         }
-
-        /* card style */
         .card {
             background: rgba(12, 20, 28, 0.7);
             backdrop-filter: blur(16px);
             border-radius: 2rem;
             border: 1px solid rgba(71, 85, 105, 0.5);
             padding: 1.5rem 1.6rem;
-            transition: all 0.2s ease;
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.4);
+            transition: all 0.2s;
         }
-        .card:hover {
-            border-color: rgba(96, 165, 250, 0.4);
-        }
+        .card:hover { border-color: rgba(96, 165, 250, 0.4); }
         .card-title {
             font-size: 1.3rem;
             font-weight: 600;
@@ -134,11 +88,7 @@
             border-left: 4px solid #3b82f6;
             padding-left: 0.8rem;
         }
-        .token-info-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 0.9rem;
-        }
+        .token-info-grid { display: flex; flex-direction: column; gap: 0.9rem; }
         .info-row {
             display: flex;
             justify-content: space-between;
@@ -147,10 +97,7 @@
             padding: 0.5rem 0;
             border-bottom: 1px dashed #2d3a48;
         }
-        .info-label {
-            font-weight: 500;
-            color: #94a3b8;
-        }
+        .info-label { font-weight: 500; color: #94a3b8; }
         .info-value {
             font-weight: 600;
             font-family: monospace;
@@ -159,11 +106,7 @@
             border-radius: 30px;
             font-size: 0.9rem;
         }
-
-        /* forms */
-        .input-group {
-            margin-bottom: 1.2rem;
-        }
+        .input-group { margin-bottom: 1.2rem; }
         label {
             display: block;
             font-size: 0.75rem;
@@ -180,7 +123,6 @@
             border-radius: 1rem;
             color: #f1f5f9;
             font-size: 0.9rem;
-            transition: 0.2s;
             font-family: monospace;
         }
         input:focus {
@@ -202,21 +144,11 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            font-size: 0.9rem;
             margin-top: 0.5rem;
         }
-        button.action-btn.primary {
-            background: linear-gradient(95deg, #2563eb, #1d4ed8);
-            color: white;
-        }
-        button.action-btn.primary:hover:not(:disabled) {
-            background: linear-gradient(95deg, #3b82f6, #2563eb);
-            transform: translateY(-2px);
-        }
-        button.action-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+        button.action-btn.primary { background: linear-gradient(95deg, #2563eb, #1d4ed8); color: white; }
+        button.action-btn.primary:hover:not(:disabled) { background: linear-gradient(95deg, #3b82f6, #2563eb); transform: translateY(-2px); }
+        button.action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .status-message {
             margin-top: 1rem;
             font-size: 0.8rem;
@@ -243,21 +175,17 @@
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        footer {
-            text-align: center;
-            margin-top: 2.5rem;
-            font-size: 0.75rem;
-            color: #4b5563;
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        footer { text-align: center; margin-top: 2.5rem; font-size: 0.75rem; color: #4b5563; }
         @media (max-width: 640px) {
             body { padding: 1rem; }
             .grid { grid-template-columns: 1fr; }
             .header { flex-direction: column; align-items: stretch; }
         }
+        .error-message { color: #f87171; text-align: center; padding: 1rem; background: rgba(0,0,0,0.6); border-radius: 1rem; margin: 1rem; }
     </style>
+    <!-- Ethers v6 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
 </head>
 <body>
 <div class="dashboard">
@@ -267,13 +195,10 @@
             <p>Decentralized token interaction</p>
         </div>
         <div class="wallet-status">
-            <div class="address-badge" id="walletAddressDisplay">
-                <i class="fas fa-circle-notch"></i> Not connected
-            </div>
+            <div class="address-badge" id="walletAddressDisplay"><i class="fas fa-circle-notch"></i> Not connected</div>
             <button id="connectBtn" class="connect-btn"><i class="fas fa-plug"></i> Connect Wallet</button>
         </div>
     </div>
-
     <div class="grid">
         <!-- Token Info Card -->
         <div class="card">
@@ -285,67 +210,36 @@
                 <div class="info-row"><span class="info-label">Your Balance</span><span id="userBalance" class="info-value">—</span></div>
             </div>
         </div>
-
-        <!-- Transfer Tokens -->
+        <!-- Transfer -->
         <div class="card">
             <div class="card-title"><i class="fas fa-paper-plane"></i> Transfer Tokens</div>
-            <div class="input-group">
-                <label><i class="fas fa-user"></i> Recipient Address</label>
-                <input type="text" id="transferTo" placeholder="0x...">
-            </div>
-            <div class="input-group">
-                <label><i class="fas fa-coins"></i> Amount (tokens)</label>
-                <input type="text" id="transferAmount" placeholder="e.g., 10.5">
-            </div>
+            <div class="input-group"><label><i class="fas fa-user"></i> Recipient Address</label><input type="text" id="transferTo" placeholder="0x..."></div>
+            <div class="input-group"><label><i class="fas fa-coins"></i> Amount (tokens)</label><input type="text" id="transferAmount" placeholder="e.g., 10.5"></div>
             <button id="sendTransferBtn" class="action-btn primary"><i class="fas fa-send"></i> Send Tokens</button>
             <div id="transferStatus" class="status-message"></div>
         </div>
-
-        <!-- Approve Spending -->
+        <!-- Approve -->
         <div class="card">
             <div class="card-title"><i class="fas fa-check-double"></i> Approve Spending</div>
-            <div class="input-group">
-                <label><i class="fas fa-robot"></i> Spender Address</label>
-                <input type="text" id="approveSpender" placeholder="0x...">
-            </div>
-            <div class="input-group">
-                <label><i class="fas fa-chart-simple"></i> Allowance Amount</label>
-                <input type="text" id="approveAmount" placeholder="e.g., 100">
-            </div>
+            <div class="input-group"><label><i class="fas fa-robot"></i> Spender Address</label><input type="text" id="approveSpender" placeholder="0x..."></div>
+            <div class="input-group"><label><i class="fas fa-chart-simple"></i> Allowance Amount</label><input type="text" id="approveAmount" placeholder="e.g., 100"></div>
             <button id="approveBtn" class="action-btn primary"><i class="fas fa-lock-open"></i> Approve</button>
             <div id="approveStatus" class="status-message"></div>
         </div>
-
-        <!-- Check Allowance -->
+        <!-- Allowance -->
         <div class="card">
             <div class="card-title"><i class="fas fa-eye"></i> Check Allowance</div>
-            <div class="input-group">
-                <label><i class="fas fa-user-circle"></i> Owner Address</label>
-                <input type="text" id="allowanceOwner" placeholder="0x...">
-            </div>
-            <div class="input-group">
-                <label><i class="fas fa-robot"></i> Spender Address</label>
-                <input type="text" id="allowanceSpender" placeholder="0x...">
-            </div>
+            <div class="input-group"><label><i class="fas fa-user-circle"></i> Owner Address</label><input type="text" id="allowanceOwner" placeholder="0x..."></div>
+            <div class="input-group"><label><i class="fas fa-robot"></i> Spender Address</label><input type="text" id="allowanceSpender" placeholder="0x..."></div>
             <button id="checkAllowanceBtn" class="action-btn"><i class="fas fa-search"></i> Check Allowance</button>
             <div id="allowanceResult" class="allowance-result">—</div>
         </div>
-
-        <!-- Transfer From (using allowance) -->
+        <!-- TransferFrom -->
         <div class="card">
             <div class="card-title"><i class="fas fa-exchange-alt"></i> Transfer From</div>
-            <div class="input-group">
-                <label><i class="fas fa-user"></i> From Address</label>
-                <input type="text" id="transferFromOwner" placeholder="owner address">
-            </div>
-            <div class="input-group">
-                <label><i class="fas fa-user-plus"></i> To Address</label>
-                <input type="text" id="transferFromTo" placeholder="recipient">
-            </div>
-            <div class="input-group">
-                <label><i class="fas fa-coins"></i> Amount</label>
-                <input type="text" id="transferFromAmount" placeholder="amount">
-            </div>
+            <div class="input-group"><label><i class="fas fa-user"></i> From Address</label><input type="text" id="transferFromOwner" placeholder="owner address"></div>
+            <div class="input-group"><label><i class="fas fa-user-plus"></i> To Address</label><input type="text" id="transferFromTo" placeholder="recipient"></div>
+            <div class="input-group"><label><i class="fas fa-coins"></i> Amount</label><input type="text" id="transferFromAmount" placeholder="amount"></div>
             <button id="transferFromBtn" class="action-btn primary"><i class="fas fa-arrow-right-arrow-left"></i> Transfer From</button>
             <div id="transferFromStatus" class="status-message"></div>
         </div>
@@ -353,335 +247,218 @@
     <footer>⚡ Powered by ethers.js v6 | ERC20 interaction on any EVM network</footer>
 </div>
 
-<!-- Ethers v6 CDN -->
-<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.min.js"></script>
 <script>
-    // ======================== CONTRACT DETAILS ===========================
-    const CONTRACT_ADDRESS = "0xdE17B3C5451c28365f7DFF3210A06ce6391DCC7c";
-    const ABI = [
-        { "inputs": [ { "internalType": "address", "name": "spender", "type": "address" }, { "internalType": "uint256", "name": "value", "type": "uint256" } ], "name": "approve", "outputs": [ { "internalType": "bool", "name": "", "type": "bool" } ], "stateMutability": "nonpayable", "type": "function" },
-        { "inputs": [ { "internalType": "string", "name": "name", "type": "string" }, { "internalType": "string", "name": "symbol", "type": "string" }, { "internalType": "uint256", "name": "initialSupply", "type": "uint256" }, { "internalType": "address", "name": "tokenOwner", "type": "address" } ], "stateMutability": "nonpayable", "type": "constructor" },
-        { "inputs": [ { "internalType": "address", "name": "spender", "type": "address" }, { "internalType": "uint256", "name": "allowance", "type": "uint256" }, { "internalType": "uint256", "name": "needed", "type": "uint256" } ], "name": "ERC20InsufficientAllowance", "type": "error" },
-        { "inputs": [ { "internalType": "address", "name": "sender", "type": "address" }, { "internalType": "uint256", "name": "balance", "type": "uint256" }, { "internalType": "uint256", "name": "needed", "type": "uint256" } ], "name": "ERC20InsufficientBalance", "type": "error" },
-        { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "address", "name": "owner", "type": "address" }, { "indexed": true, "internalType": "address", "name": "spender", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" } ], "name": "Approval", "type": "event" },
-        { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "address", "name": "previousOwner", "type": "address" }, { "indexed": true, "internalType": "address", "name": "newOwner", "type": "address" } ], "name": "OwnershipTransferred", "type": "event" },
-        { "inputs": [], "name": "renounceOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
-        { "inputs": [ { "internalType": "address", "name": "to", "type": "address" }, { "internalType": "uint256", "name": "value", "type": "uint256" } ], "name": "transfer", "outputs": [ { "internalType": "bool", "name": "", "type": "bool" } ], "stateMutability": "nonpayable", "type": "function" },
-        { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "address", "name": "from", "type": "address" }, { "indexed": true, "internalType": "address", "name": "to", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" } ], "name": "Transfer", "type": "event" },
-        { "inputs": [ { "internalType": "address", "name": "from", "type": "address" }, { "internalType": "address", "name": "to", "type": "address" }, { "internalType": "uint256", "name": "value", "type": "uint256" } ], "name": "transferFrom", "outputs": [ { "internalType": "bool", "name": "", "type": "bool" } ], "stateMutability": "nonpayable", "type": "function" },
-        { "inputs": [ { "internalType": "address", "name": "newOwner", "type": "address" } ], "name": "transferOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
-        { "inputs": [ { "internalType": "address", "name": "owner", "type": "address" }, { "internalType": "address", "name": "spender", "type": "address" } ], "name": "allowance", "outputs": [ { "internalType": "uint256", "name": "", "type": "uint256" } ], "stateMutability": "view", "type": "function" },
-        { "inputs": [ { "internalType": "address", "name": "account", "type": "address" } ], "name": "balanceOf", "outputs": [ { "internalType": "uint256", "name": "", "type": "uint256" } ], "stateMutability": "view", "type": "function" },
-        { "inputs": [], "name": "decimals", "outputs": [ { "internalType": "uint8", "name": "", "type": "uint8" } ], "stateMutability": "pure", "type": "function" },
-        { "inputs": [], "name": "name", "outputs": [ { "internalType": "string", "name": "", "type": "string" } ], "stateMutability": "view", "type": "function" },
-        { "inputs": [], "name": "symbol", "outputs": [ { "internalType": "string", "name": "", "type": "string" } ], "stateMutability": "view", "type": "function" },
-        { "inputs": [], "name": "totalSupply", "outputs": [ { "internalType": "uint256", "name": "", "type": "uint256" } ], "stateMutability": "view", "type": "function" },
-        { "inputs": [], "name": "owner", "outputs": [ { "internalType": "address", "name": "", "type": "address" } ], "stateMutability": "view", "type": "function" }
-    ];
-
-    // Global state
-    let provider = null;
-    let signer = null;
-    let contract = null;
-    let userAddress = null;
-    let tokenDecimals = 18;   // default, will fetch from contract
-
-    // DOM elements
-    const connectBtn = document.getElementById('connectBtn');
-    const walletDisplay = document.getElementById('walletAddressDisplay');
-    // token info fields
-    const tokenNameSpan = document.getElementById('tokenName');
-    const tokenSymbolSpan = document.getElementById('tokenSymbol');
-    const totalSupplySpan = document.getElementById('totalSupply');
-    const userBalanceSpan = document.getElementById('userBalance');
-    // transfer
-    const transferToInput = document.getElementById('transferTo');
-    const transferAmountInput = document.getElementById('transferAmount');
-    const sendTransferBtn = document.getElementById('sendTransferBtn');
-    const transferStatus = document.getElementById('transferStatus');
-    // approve
-    const approveSpenderInput = document.getElementById('approveSpender');
-    const approveAmountInput = document.getElementById('approveAmount');
-    const approveBtn = document.getElementById('approveBtn');
-    const approveStatus = document.getElementById('approveStatus');
-    // allowance
-    const allowanceOwnerInput = document.getElementById('allowanceOwner');
-    const allowanceSpenderInput = document.getElementById('allowanceSpender');
-    const checkAllowanceBtn = document.getElementById('checkAllowanceBtn');
-    const allowanceResultDiv = document.getElementById('allowanceResult');
-    // transferFrom
-    const transferFromOwnerInput = document.getElementById('transferFromOwner');
-    const transferFromToInput = document.getElementById('transferFromTo');
-    const transferFromAmountInput = document.getElementById('transferFromAmount');
-    const transferFromBtn = document.getElementById('transferFromBtn');
-    const transferFromStatus = document.getElementById('transferFromStatus');
-
-    // Helper: format address short
-    function shortenAddress(addr) {
-        if (!addr) return 'Not connected';
-        return addr.slice(0,6) + '...' + addr.slice(-4);
-    }
-
-    // Update UI wallet address
-    function updateWalletUI() {
-        if (userAddress) {
-            walletDisplay.innerHTML = `<i class="fas fa-wallet"></i> ${shortenAddress(userAddress)}`;
-            if (connectBtn.innerText.includes('Connect')) {
-                connectBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Disconnect';
-                connectBtn.classList.add('disconnect-btn');
-            }
-        } else {
-            walletDisplay.innerHTML = '<i class="fas fa-circle-notch"></i> Not connected';
-            connectBtn.innerHTML = '<i class="fas fa-plug"></i> Connect Wallet';
-            connectBtn.classList.remove('disconnect-btn');
-        }
-    }
-
-    // Format amount from BigInt using decimals
-    function formatToken(weiValue) {
-        if (weiValue === undefined || weiValue === null) return '0';
-        return ethers.formatUnits(weiValue, tokenDecimals);
-    }
-
-    // Parse input amount to BigInt with decimals
-    function parseTokenAmount(amountStr) {
-        if (!amountStr || isNaN(parseFloat(amountStr))) throw new Error('Invalid amount');
-        return ethers.parseUnits(amountStr, tokenDecimals);
-    }
-
-    // Fetch and update token info (name, symbol, totalSupply, balance)
-    async function updateTokenInfo() {
-        if (!contract || !userAddress) return;
-        try {
-            const name = await contract.name();
-            const symbol = await contract.symbol();
-            const totalSup = await contract.totalSupply();
-            const balance = await contract.balanceOf(userAddress);
-            tokenNameSpan.innerText = name;
-            tokenSymbolSpan.innerText = symbol;
-            totalSupplySpan.innerText = formatToken(totalSup);
-            userBalanceSpan.innerText = formatToken(balance);
-        } catch (err) {
-            console.error("Token info error:", err);
-            tokenNameSpan.innerText = "Error";
-        }
-    }
-
-    // Fetch decimals from contract (if possible) and store
-    async function fetchDecimals() {
-        if (!contract) return 18;
-        try {
-            const decimals = await contract.decimals();
-            tokenDecimals = decimals;
-        } catch(e) {
-            console.warn("Could not fetch decimals, fallback 18");
-            tokenDecimals = 18;
-        }
-    }
-
-    // Initialize contract with signer
-    async function initContract() {
-        if (!signer) return null;
-        const contractInstance = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
-        contract = contractInstance;
-        await fetchDecimals();
-        await updateTokenInfo();
-        return contract;
-    }
-
-    // Main connect wallet
-    async function connectWallet() {
-        if (!window.ethereum) {
-            alert("MetaMask not detected! Please install MetaMask extension.");
+    // Wait for ethers and DOM
+    (function() {
+        if (typeof ethers === 'undefined') {
+            document.body.innerHTML = '<div class="error-message"><i class="fas fa-exclamation-triangle"></i> Failed to load ethers.js library. Please check your internet connection and refresh.</div>' + document.body.innerHTML;
             return;
         }
-        try {
-            // request accounts
-            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            if (!accounts || accounts.length === 0) throw new Error("No accounts found");
-            userAddress = accounts[0];
-            provider = new ethers.BrowserProvider(window.ethereum);
-            signer = await provider.getSigner();
-            await initContract();
-            updateWalletUI();
-            // Setup event listeners for account/chain changes
-            window.ethereum.on('accountsChanged', handleAccountsChanged);
-            window.ethereum.on('chainChanged', () => window.location.reload());
-        } catch (error) {
-            console.error("Connection error:", error);
-            let msg = error.message || "Failed to connect";
-            if (msg.includes("User rejected")) msg = "Request rejected. Please approve connection.";
-            alert(`Connection failed: ${msg}`);
-        }
-    }
 
-    function handleAccountsChanged(accounts) {
-        if (accounts.length === 0) {
-            // disconnected
-            userAddress = null;
-            signer = null;
-            contract = null;
+        // CONTRACT DETAILS
+        const CONTRACT_ADDRESS = "0xdE17B3C5451c28365f7DFF3210A06ce6391DCC7c";
+        const ABI = [
+            { "inputs": [ { "internalType": "address", "name": "spender", "type": "address" }, { "internalType": "uint256", "name": "value", "type": "uint256" } ], "name": "approve", "outputs": [ { "internalType": "bool", "name": "", "type": "bool" } ], "stateMutability": "nonpayable", "type": "function" },
+            { "inputs": [ { "internalType": "string", "name": "name", "type": "string" }, { "internalType": "string", "name": "symbol", "type": "string" }, { "internalType": "uint256", "name": "initialSupply", "type": "uint256" }, { "internalType": "address", "name": "tokenOwner", "type": "address" } ], "stateMutability": "nonpayable", "type": "constructor" },
+            { "inputs": [ { "internalType": "address", "name": "spender", "type": "address" }, { "internalType": "uint256", "name": "allowance", "type": "uint256" }, { "internalType": "uint256", "name": "needed", "type": "uint256" } ], "name": "ERC20InsufficientAllowance", "type": "error" },
+            { "inputs": [ { "internalType": "address", "name": "sender", "type": "address" }, { "internalType": "uint256", "name": "balance", "type": "uint256" }, { "internalType": "uint256", "name": "needed", "type": "uint256" } ], "name": "ERC20InsufficientBalance", "type": "error" },
+            { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "address", "name": "owner", "type": "address" }, { "indexed": true, "internalType": "address", "name": "spender", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" } ], "name": "Approval", "type": "event" },
+            { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "address", "name": "previousOwner", "type": "address" }, { "indexed": true, "internalType": "address", "name": "newOwner", "type": "address" } ], "name": "OwnershipTransferred", "type": "event" },
+            { "inputs": [], "name": "renounceOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+            { "inputs": [ { "internalType": "address", "name": "to", "type": "address" }, { "internalType": "uint256", "name": "value", "type": "uint256" } ], "name": "transfer", "outputs": [ { "internalType": "bool", "name": "", "type": "bool" } ], "stateMutability": "nonpayable", "type": "function" },
+            { "anonymous": false, "inputs": [ { "indexed": true, "internalType": "address", "name": "from", "type": "address" }, { "indexed": true, "internalType": "address", "name": "to", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" } ], "name": "Transfer", "type": "event" },
+            { "inputs": [ { "internalType": "address", "name": "from", "type": "address" }, { "internalType": "address", "name": "to", "type": "address" }, { "internalType": "uint256", "name": "value", "type": "uint256" } ], "name": "transferFrom", "outputs": [ { "internalType": "bool", "name": "", "type": "bool" } ], "stateMutability": "nonpayable", "type": "function" },
+            { "inputs": [ { "internalType": "address", "name": "newOwner", "type": "address" } ], "name": "transferOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+            { "inputs": [ { "internalType": "address", "name": "owner", "type": "address" }, { "internalType": "address", "name": "spender", "type": "address" } ], "name": "allowance", "outputs": [ { "internalType": "uint256", "name": "", "type": "uint256" } ], "stateMutability": "view", "type": "function" },
+            { "inputs": [ { "internalType": "address", "name": "account", "type": "address" } ], "name": "balanceOf", "outputs": [ { "internalType": "uint256", "name": "", "type": "uint256" } ], "stateMutability": "view", "type": "function" },
+            { "inputs": [], "name": "decimals", "outputs": [ { "internalType": "uint8", "name": "", "type": "uint8" } ], "stateMutability": "pure", "type": "function" },
+            { "inputs": [], "name": "name", "outputs": [ { "internalType": "string", "name": "", "type": "string" } ], "stateMutability": "view", "type": "function" },
+            { "inputs": [], "name": "symbol", "outputs": [ { "internalType": "string", "name": "", "type": "string" } ], "stateMutability": "view", "type": "function" },
+            { "inputs": [], "name": "totalSupply", "outputs": [ { "internalType": "uint256", "name": "", "type": "uint256" } ], "stateMutability": "view", "type": "function" },
+            { "inputs": [], "name": "owner", "outputs": [ { "internalType": "address", "name": "", "type": "address" } ], "stateMutability": "view", "type": "function" }
+        ];
+
+        let provider = null, signer = null, contract = null, userAddress = null;
+        let tokenDecimals = 18;
+
+        // DOM elements
+        const connectBtn = document.getElementById('connectBtn');
+        const walletDisplay = document.getElementById('walletAddressDisplay');
+        const tokenNameSpan = document.getElementById('tokenName');
+        const tokenSymbolSpan = document.getElementById('tokenSymbol');
+        const totalSupplySpan = document.getElementById('totalSupply');
+        const userBalanceSpan = document.getElementById('userBalance');
+        const transferToInput = document.getElementById('transferTo');
+        const transferAmountInput = document.getElementById('transferAmount');
+        const sendTransferBtn = document.getElementById('sendTransferBtn');
+        const transferStatus = document.getElementById('transferStatus');
+        const approveSpenderInput = document.getElementById('approveSpender');
+        const approveAmountInput = document.getElementById('approveAmount');
+        const approveBtn = document.getElementById('approveBtn');
+        const approveStatus = document.getElementById('approveStatus');
+        const allowanceOwnerInput = document.getElementById('allowanceOwner');
+        const allowanceSpenderInput = document.getElementById('allowanceSpender');
+        const checkAllowanceBtn = document.getElementById('checkAllowanceBtn');
+        const allowanceResultDiv = document.getElementById('allowanceResult');
+        const transferFromOwnerInput = document.getElementById('transferFromOwner');
+        const transferFromToInput = document.getElementById('transferFromTo');
+        const transferFromAmountInput = document.getElementById('transferFromAmount');
+        const transferFromBtn = document.getElementById('transferFromBtn');
+        const transferFromStatus = document.getElementById('transferFromStatus');
+
+        function shortenAddress(addr) { return addr ? addr.slice(0,6)+'...'+addr.slice(-4) : 'Not connected'; }
+        function updateWalletUI() {
+            if (userAddress) {
+                walletDisplay.innerHTML = `<i class="fas fa-wallet"></i> ${shortenAddress(userAddress)}`;
+                connectBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Disconnect';
+                connectBtn.classList.add('disconnect-btn');
+            } else {
+                walletDisplay.innerHTML = '<i class="fas fa-circle-notch"></i> Not connected';
+                connectBtn.innerHTML = '<i class="fas fa-plug"></i> Connect Wallet';
+                connectBtn.classList.remove('disconnect-btn');
+            }
+        }
+        function formatToken(weiValue) { return ethers.formatUnits(weiValue || 0, tokenDecimals); }
+        function parseTokenAmount(amountStr) { return ethers.parseUnits(amountStr, tokenDecimals); }
+
+        async function updateTokenInfo() {
+            if (!contract || !userAddress) return;
+            try {
+                const name = await contract.name();
+                const symbol = await contract.symbol();
+                const totalSup = await contract.totalSupply();
+                const balance = await contract.balanceOf(userAddress);
+                tokenNameSpan.innerText = name;
+                tokenSymbolSpan.innerText = symbol;
+                totalSupplySpan.innerText = formatToken(totalSup);
+                userBalanceSpan.innerText = formatToken(balance);
+            } catch (err) { console.error(err); }
+        }
+
+        async function fetchDecimals() {
+            try { tokenDecimals = await contract.decimals(); } catch(e) { tokenDecimals = 18; }
+        }
+
+        async function initContract() {
+            if (!signer) return null;
+            contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+            await fetchDecimals();
+            await updateTokenInfo();
+            return contract;
+        }
+
+        async function connectWallet() {
+            if (!window.ethereum) {
+                alert("MetaMask not detected! Please install MetaMask extension.");
+                return;
+            }
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                if (!accounts.length) throw new Error("No accounts");
+                userAddress = accounts[0];
+                provider = new ethers.BrowserProvider(window.ethereum);
+                signer = await provider.getSigner();
+                await initContract();
+                updateWalletUI();
+                window.ethereum.on('accountsChanged', (acc) => acc.length ? (userAddress=acc[0], initContract().then(updateWalletUI)) : disconnectWallet());
+                window.ethereum.on('chainChanged', () => window.location.reload());
+            } catch (error) {
+                console.error(error);
+                alert("Connection failed: " + (error.message || "Unknown error"));
+            }
+        }
+
+        async function disconnectWallet() {
+            userAddress = null; signer = null; contract = null;
             updateWalletUI();
-            // reset token display
             tokenNameSpan.innerText = '—';
             tokenSymbolSpan.innerText = '—';
             totalSupplySpan.innerText = '—';
             userBalanceSpan.innerText = '—';
-        } else {
-            userAddress = accounts[0];
-            if (provider && window.ethereum) {
-                provider = new ethers.BrowserProvider(window.ethereum);
-                provider.getSigner().then(async (newSigner) => {
-                    signer = newSigner;
-                    await initContract();
-                    updateWalletUI();
-                }).catch(console.error);
+            transferStatus.innerHTML = approveStatus.innerHTML = transferFromStatus.innerHTML = '';
+            allowanceResultDiv.innerHTML = '—';
+        }
+
+        async function handleTransaction(txPromise, statusElement, successMsg) {
+            if (!contract || !userAddress) { statusElement.innerHTML = '<span style="color:#f87171">⚠️ Wallet not connected</span>'; return; }
+            statusElement.innerHTML = '<i class="loading-spinner"></i> Transaction pending...';
+            try {
+                const tx = await txPromise;
+                await tx.wait();
+                statusElement.innerHTML = `<span style="color:#4ade80">✅ ${successMsg}</span>`;
+                await updateTokenInfo();
+                setTimeout(() => { if (statusElement.innerHTML.includes(successMsg)) statusElement.innerHTML = ''; }, 4000);
+            } catch (err) {
+                console.error(err);
+                let reason = err.reason || err.message;
+                statusElement.innerHTML = `<span style="color:#f87171">❌ Error: ${reason.slice(0,100)}</span>`;
+                setTimeout(() => { if (statusElement.innerHTML.includes('Error')) statusElement.innerHTML = ''; }, 5000);
             }
         }
-    }
 
-    async function disconnectWallet() {
-        // Clear UI state, but cannot programmatically disconnect from MetaMask
-        userAddress = null;
-        signer = null;
-        contract = null;
-        updateWalletUI();
-        tokenNameSpan.innerText = '—';
-        tokenSymbolSpan.innerText = '—';
-        totalSupplySpan.innerText = '—';
-        userBalanceSpan.innerText = '—';
-        // clear statuses
-        transferStatus.innerHTML = '';
-        approveStatus.innerHTML = '';
-        transferFromStatus.innerHTML = '';
-        allowanceResultDiv.innerHTML = '—';
-    }
-
-    // Generic tx handler with loading and error
-    async function handleTransaction(txPromise, statusElement, successMsg) {
-        if (!contract || !userAddress) {
-            statusElement.innerHTML = '<span style="color:#f87171">⚠️ Wallet not connected</span>';
-            return;
-        }
-        statusElement.innerHTML = '<i class="loading-spinner"></i> Transaction pending...';
-        try {
-            const tx = await txPromise;
-            await tx.wait();
-            statusElement.innerHTML = `<span style="color:#4ade80">✅ ${successMsg}</span>`;
-            // refresh balances & token info after write
-            await updateTokenInfo();
-            // after 3 seconds clear success message
-            setTimeout(() => { if (statusElement.innerHTML.includes(successMsg)) statusElement.innerHTML = ''; }, 4000);
-        } catch (err) {
-            console.error(err);
-            let reason = err.reason || err.message;
-            if (reason.includes("insufficient")) reason = "Insufficient balance or allowance";
-            statusElement.innerHTML = `<span style="color:#f87171">❌ Error: ${reason.slice(0, 100)}</span>`;
-            setTimeout(() => { if (statusElement.innerHTML.includes('Error')) statusElement.innerHTML = ''; }, 5000);
-        }
-    }
-
-    // 1. Transfer
-    async function transferTokens() {
-        const to = transferToInput.value.trim();
-        const amountRaw = transferAmountInput.value.trim();
-        if (!ethers.isAddress(to)) { transferStatus.innerHTML = '<span style="color:#f87171">Invalid recipient address</span>'; return; }
-        if (!amountRaw || parseFloat(amountRaw) <= 0) { transferStatus.innerHTML = '<span style="color:#f87171">Enter valid amount</span>'; return; }
-        try {
-            const value = parseTokenAmount(amountRaw);
-            const txPromise = contract.transfer(to, value);
-            await handleTransaction(txPromise, transferStatus, `Transfer ${amountRaw} tokens to ${shortenAddress(to)}`);
-            transferToInput.value = '';
-            transferAmountInput.value = '';
-        } catch (err) {
-            transferStatus.innerHTML = `<span style="color:#f87171">Amount error: ${err.message}</span>`;
-        }
-    }
-
-    // 2. Approve
-    async function approveSpending() {
-        const spender = approveSpenderInput.value.trim();
-        const amountRaw = approveAmountInput.value.trim();
-        if (!ethers.isAddress(spender)) { approveStatus.innerHTML = '<span style="color:#f87171">Invalid spender address</span>'; return; }
-        if (!amountRaw || parseFloat(amountRaw) <= 0) { approveStatus.innerHTML = '<span style="color:#f87171">Enter valid amount</span>'; return; }
-        try {
-            const value = parseTokenAmount(amountRaw);
-            const txPromise = contract.approve(spender, value);
-            await handleTransaction(txPromise, approveStatus, `Approved ${amountRaw} tokens for ${shortenAddress(spender)}`);
-            approveSpenderInput.value = '';
-            approveAmountInput.value = '';
-        } catch (err) {
-            approveStatus.innerHTML = `<span style="color:#f87171">${err.message.slice(0,100)}</span>`;
-        }
-    }
-
-    // 3. Check allowance
-    async function checkAllowance() {
-        if (!contract || !userAddress) { allowanceResultDiv.innerHTML = '<span style="color:#f87171">Connect wallet first</span>'; return; }
-        const owner = allowanceOwnerInput.value.trim();
-        const spender = allowanceSpenderInput.value.trim();
-        if (!ethers.isAddress(owner)) { allowanceResultDiv.innerHTML = '❌ Invalid owner address'; return; }
-        if (!ethers.isAddress(spender)) { allowanceResultDiv.innerHTML = '❌ Invalid spender address'; return; }
-        try {
-            const allowanceWei = await contract.allowance(owner, spender);
-            const formatted = formatToken(allowanceWei);
-            allowanceResultDiv.innerHTML = `💰 Allowance: ${formatted} ${tokenSymbolSpan.innerText || 'tokens'}`;
-        } catch (err) {
-            allowanceResultDiv.innerHTML = `⚠️ Error: ${err.message.slice(0,60)}`;
-        }
-    }
-
-    // 4. Transfer From (requires allowance)
-    async function transferFrom() {
-        if (!contract || !userAddress) { transferFromStatus.innerHTML = '<span style="color:#f87171">Wallet not connected</span>'; return; }
-        const fromAddr = transferFromOwnerInput.value.trim();
-        const toAddr = transferFromToInput.value.trim();
-        const amountRaw = transferFromAmountInput.value.trim();
-        if (!ethers.isAddress(fromAddr)) { transferFromStatus.innerHTML = 'Invalid FROM address'; return; }
-        if (!ethers.isAddress(toAddr)) { transferFromStatus.innerHTML = 'Invalid TO address'; return; }
-        if (!amountRaw || parseFloat(amountRaw) <= 0) { transferFromStatus.innerHTML = 'Invalid amount'; return; }
-        try {
-            const value = parseTokenAmount(amountRaw);
-            const txPromise = contract.transferFrom(fromAddr, toAddr, value);
-            await handleTransaction(txPromise, transferFromStatus, `TransferFrom ${amountRaw} tokens from ${shortenAddress(fromAddr)} → ${shortenAddress(toAddr)}`);
-            transferFromOwnerInput.value = '';
-            transferFromToInput.value = '';
-            transferFromAmountInput.value = '';
-        } catch (err) {
-            transferFromStatus.innerHTML = `<span style="color:#f87171">Error: ${err.message.slice(0,100)}</span>`;
-        }
-    }
-
-    // Event listeners and initial disconnection safety
-    connectBtn.addEventListener('click', () => {
-        if (userAddress) {
-            disconnectWallet();
-        } else {
-            connectWallet();
-        }
-    });
-    sendTransferBtn.addEventListener('click', transferTokens);
-    approveBtn.addEventListener('click', approveSpending);
-    checkAllowanceBtn.addEventListener('click', checkAllowance);
-    transferFromBtn.addEventListener('click', transferFrom);
-
-    // If window.ethereum already exists and previously connected, auto-connect? We'll let user click Connect.
-    // But we can check if already connected on load.
-    window.addEventListener('load', async () => {
-        if (window.ethereum && window.ethereum.selectedAddress) {
-            // silently attempt to reconnect
+        async function transferTokens() {
+            const to = transferToInput.value.trim();
+            const amountRaw = transferAmountInput.value.trim();
+            if (!ethers.isAddress(to)) { transferStatus.innerHTML = '<span style="color:#f87171">Invalid recipient</span>'; return; }
+            if (!amountRaw || parseFloat(amountRaw) <= 0) { transferStatus.innerHTML = '<span style="color:#f87171">Invalid amount</span>'; return; }
             try {
-                const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-                if (accounts && accounts.length > 0) {
-                    userAddress = accounts[0];
-                    provider = new ethers.BrowserProvider(window.ethereum);
-                    signer = await provider.getSigner();
-                    await initContract();
-                    updateWalletUI();
-                }
-            } catch(e) { console.warn("auto reconnect failed"); }
+                const value = parseTokenAmount(amountRaw);
+                await handleTransaction(contract.transfer(to, value), transferStatus, `Transfer ${amountRaw} tokens`);
+                transferToInput.value = ''; transferAmountInput.value = '';
+            } catch (err) { transferStatus.innerHTML = `<span style="color:#f87171">${err.message}</span>`; }
         }
-    });
+
+        async function approveSpending() {
+            const spender = approveSpenderInput.value.trim();
+            const amountRaw = approveAmountInput.value.trim();
+            if (!ethers.isAddress(spender)) { approveStatus.innerHTML = '<span style="color:#f87171">Invalid spender</span>'; return; }
+            if (!amountRaw || parseFloat(amountRaw) <= 0) { approveStatus.innerHTML = '<span style="color:#f87171">Invalid amount</span>'; return; }
+            try {
+                const value = parseTokenAmount(amountRaw);
+                await handleTransaction(contract.approve(spender, value), approveStatus, `Approved ${amountRaw} tokens`);
+                approveSpenderInput.value = ''; approveAmountInput.value = '';
+            } catch (err) { approveStatus.innerHTML = `<span style="color:#f87171">${err.message}</span>`; }
+        }
+
+        async function checkAllowance() {
+            if (!contract) { allowanceResultDiv.innerHTML = '<span style="color:#f87171">Connect wallet first</span>'; return; }
+            const owner = allowanceOwnerInput.value.trim();
+            const spender = allowanceSpenderInput.value.trim();
+            if (!ethers.isAddress(owner)) { allowanceResultDiv.innerHTML = '❌ Invalid owner'; return; }
+            if (!ethers.isAddress(spender)) { allowanceResultDiv.innerHTML = '❌ Invalid spender'; return; }
+            try {
+                const allowanceWei = await contract.allowance(owner, spender);
+                allowanceResultDiv.innerHTML = `💰 Allowance: ${formatToken(allowanceWei)} ${tokenSymbolSpan.innerText || 'tokens'}`;
+            } catch (err) { allowanceResultDiv.innerHTML = `⚠️ Error: ${err.message.slice(0,60)}`; }
+        }
+
+        async function transferFrom() {
+            if (!contract) { transferFromStatus.innerHTML = '<span style="color:#f87171">Wallet not connected</span>'; return; }
+            const fromAddr = transferFromOwnerInput.value.trim();
+            const toAddr = transferFromToInput.value.trim();
+            const amountRaw = transferFromAmountInput.value.trim();
+            if (!ethers.isAddress(fromAddr) || !ethers.isAddress(toAddr)) { transferFromStatus.innerHTML = 'Invalid address'; return; }
+            if (!amountRaw || parseFloat(amountRaw) <= 0) { transferFromStatus.innerHTML = 'Invalid amount'; return; }
+            try {
+                const value = parseTokenAmount(amountRaw);
+                await handleTransaction(contract.transferFrom(fromAddr, toAddr, value), transferFromStatus, `TransferFrom ${amountRaw} tokens`);
+                transferFromOwnerInput.value = ''; transferFromToInput.value = ''; transferFromAmountInput.value = '';
+            } catch (err) { transferFromStatus.innerHTML = `<span style="color:#f87171">${err.message}</span>`; }
+        }
+
+        connectBtn.addEventListener('click', () => userAddress ? disconnectWallet() : connectWallet());
+        sendTransferBtn.addEventListener('click', transferTokens);
+        approveBtn.addEventListener('click', approveSpending);
+        checkAllowanceBtn.addEventListener('click', checkAllowance);
+        transferFromBtn.addEventListener('click', transferFrom);
+
+        // Auto-reconnect if already authorized
+        if (window.ethereum && window.ethereum.selectedAddress) {
+            window.ethereum.request({ method: 'eth_accounts' }).then(accounts => {
+                if (accounts && accounts.length) connectWallet();
+            }).catch(console.warn);
+        }
+    })();
 </script>
 </body>
 </html>
