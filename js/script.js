@@ -98,6 +98,7 @@
             tokenSymbolSpan.innerText = symbol;
             totalSupplySpan.innerText = formatToken(totalSup);
             userBalanceSpan.innerText = formatToken(balance);
+            console.log("Token info updated:", { name, symbol, decimals: tokenDecimals });
         } catch (err) {
             console.error("Token info error:", err);
             tokenNameSpan.innerText = 'Error';
@@ -281,48 +282,62 @@
         }
     }
 
-    // Add token to MetaMask
+    // FIXED: Add token to MetaMask with improved error handling and logging
     async function addTokenToWallet() {
+        console.log("Add token button clicked");
         if (!window.ethereum) {
             alert("MetaMask is not installed.");
             return;
         }
         if (!contract) {
-            alert("Please connect your wallet first.");
+            alert("Please connect your wallet first and make sure the contract is loaded.");
             return;
         }
 
-        // Ensure we have token details
-        if (!tokenSymbol || tokenSymbol === '—') {
+        // Fetch fresh token details if not already available
+        let symbol = tokenSymbol;
+        let decimals = tokenDecimals;
+        let name = tokenName;
+        if (!symbol || symbol === '—') {
             try {
-                const symbol = await contract.symbol();
-                const name = await contract.name();
-                const decimals = await contract.decimals();
+                console.log("Fetching token details from contract...");
+                symbol = await contract.symbol();
+                name = await contract.name();
+                decimals = await contract.decimals();
                 tokenSymbol = symbol;
                 tokenName = name;
                 tokenDecimals = decimals;
                 tokenNameSpan.innerText = name;
                 tokenSymbolSpan.innerText = symbol;
+                console.log("Fetched:", { name, symbol, decimals });
             } catch (e) {
+                console.error("Failed to fetch token details:", e);
                 alert("Could not fetch token details. Make sure you're on the correct network and the contract exists.");
                 return;
             }
         }
 
+        // Prepare the token addition request
+        const tokenParams = {
+            type: 'ERC20',
+            options: {
+                address: CONTRACT_ADDRESS,
+                symbol: symbol,
+                decimals: decimals,
+                // optional: image: 'https://...' you can add a token logo URL here if you have one
+            },
+        };
+        console.log("Requesting wallet_watchAsset with params:", tokenParams);
+
         try {
             const wasAdded = await window.ethereum.request({
                 method: 'wallet_watchAsset',
-                params: {
-                    type: 'ERC20',
-                    options: {
-                        address: CONTRACT_ADDRESS,
-                        symbol: tokenSymbol,
-                        decimals: tokenDecimals,
-                    },
-                },
+                params: [tokenParams], // Must be an array for MetaMask
             });
+            console.log("wallet_watchAsset result:", wasAdded);
             if (wasAdded) {
-                alert("Token added to MetaMask!");
+                alert(`✅ Token ${symbol} added to MetaMask!`);
+                // Provide visual feedback on button
                 const originalText = addToWalletBtn.innerHTML;
                 addToWalletBtn.innerHTML = '<i class="fas fa-check"></i> Added!';
                 setTimeout(() => { addToWalletBtn.innerHTML = originalText; }, 2000);
@@ -330,8 +345,8 @@
                 alert("User declined to add token.");
             }
         } catch (err) {
-            console.error(err);
-            alert("Failed to add token: " + (err.message || "Unknown error"));
+            console.error("wallet_watchAsset error:", err);
+            alert("Failed to add token: " + (err.message || "Unknown error. Check console for details."));
         }
     }
 
