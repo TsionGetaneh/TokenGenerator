@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <!-- Ethers v6 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.4/dist/ethers.umd.min.js"></script>
 </head>
 <body>
@@ -32,8 +31,10 @@
                 <div class="info-row"><span class="info-label">Total Supply</span><span id="totalSupply" class="info-value">—</span></div>
                 <div class="info-row"><span class="info-label">Your Balance</span><span id="userBalance" class="info-value">—</span></div>
             </div>
+            <button id="addToWalletBtn" class="action-btn" style="margin-top: 1rem;"><i class="fas fa-plus-circle"></i> Add Token to MetaMask</button>
         </div>
-        <!-- Transfer -->
+        
+        <!-- Transfer Tokens -->
         <div class="card">
             <div class="card-title"><i class="fas fa-paper-plane"></i> Transfer Tokens</div>
             <div class="input-group"><label><i class="fas fa-user"></i> Recipient Address</label><input type="text" id="transferTo" placeholder="0x..."></div>
@@ -41,7 +42,8 @@
             <button id="sendTransferBtn" class="action-btn primary"><i class="fas fa-send"></i> Send Tokens</button>
             <div id="transferStatus" class="status-message"></div>
         </div>
-        <!-- Approve -->
+        
+        <!-- Approve Spending -->
         <div class="card">
             <div class="card-title"><i class="fas fa-check-double"></i> Approve Spending</div>
             <div class="input-group"><label><i class="fas fa-robot"></i> Spender Address</label><input type="text" id="approveSpender" placeholder="0x..."></div>
@@ -49,7 +51,8 @@
             <button id="approveBtn" class="action-btn primary"><i class="fas fa-lock-open"></i> Approve</button>
             <div id="approveStatus" class="status-message"></div>
         </div>
-        <!-- Allowance -->
+        
+        <!-- Check Allowance -->
         <div class="card">
             <div class="card-title"><i class="fas fa-eye"></i> Check Allowance</div>
             <div class="input-group"><label><i class="fas fa-user-circle"></i> Owner Address</label><input type="text" id="allowanceOwner" placeholder="0x..."></div>
@@ -57,7 +60,8 @@
             <button id="checkAllowanceBtn" class="action-btn"><i class="fas fa-search"></i> Check Allowance</button>
             <div id="allowanceResult" class="allowance-result">—</div>
         </div>
-        <!-- TransferFrom -->
+        
+        <!-- Transfer From -->
         <div class="card">
             <div class="card-title"><i class="fas fa-exchange-alt"></i> Transfer From</div>
             <div class="input-group"><label><i class="fas fa-user"></i> From Address</label><input type="text" id="transferFromOwner" placeholder="owner address"></div>
@@ -65,6 +69,15 @@
             <div class="input-group"><label><i class="fas fa-coins"></i> Amount</label><input type="text" id="transferFromAmount" placeholder="amount"></div>
             <button id="transferFromBtn" class="action-btn primary"><i class="fas fa-arrow-right-arrow-left"></i> Transfer From</button>
             <div id="transferFromStatus" class="status-message"></div>
+        </div>
+        
+        <!-- Burn Tokens (NEW) -->
+        <div class="card">
+            <div class="card-title"><i class="fas fa-fire"></i> Burn Tokens</div>
+            <div class="input-group"><label><i class="fas fa-coins"></i> Amount to Burn</label><input type="text" id="burnAmount" placeholder="e.g., 5"></div>
+            <button id="burnBtn" class="action-btn primary"><i class="fas fa-trash-alt"></i> Burn Tokens</button>
+            <div id="burnStatus" class="status-message"></div>
+            <div class="info-row" style="margin-top: 0.8rem;"><span class="info-label">Note</span><span class="info-value">Requires a <strong>burn</strong> function in the contract</span></div>
         </div>
     </div>
     <footer>⚡ Powered by ethers.js v6 | ERC20 interaction on any EVM network</footer>
